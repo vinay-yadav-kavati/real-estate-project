@@ -1,0 +1,6 @@
+{
+  "name": "HomeNest - Real Estate",
+  "description": "Modern real estate platform discovering verified residential and commercial properties.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
