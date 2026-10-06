@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { MapPin, Bed, Bath, Square, ArrowUpRight } from 'lucide-react';
 import { Property } from '../types/property';
 import { PropertyStatusBadge } from './PropertyStatusBadge';
@@ -10,14 +11,18 @@ export interface PropertyCardProps {
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewClick }) => {
+  const [imgSrc, setImgSrc] = useState(property.imageUrl);
+  const detailUrl = `/properties/${property.id}`;
+
   return (
     <article className="group bg-white rounded-xl border border-slate-200/90 overflow-hidden hover:border-slate-300 hover:shadow-md transition-all duration-200 flex flex-col">
       {/* Property Media Viewport */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+      <Link to={detailUrl} className="block relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
         <img
-          src={property.imageUrl}
+          src={imgSrc}
           alt={property.imageAlt}
           loading="lazy"
+          onError={() => setImgSrc('/images/properties/hero.jpg')}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
@@ -28,7 +33,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewClic
           </span>
           <PropertyStatusBadge status={property.status} />
         </div>
-      </div>
+      </Link>
 
       {/* Card Content Area */}
       <div className="p-5 flex-1 flex flex-col justify-between">
@@ -47,7 +52,9 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewClic
 
           {/* Property Title */}
           <h3 className="text-lg font-semibold text-slate-900 group-hover:text-[#B48C58] transition-colors line-clamp-1">
-            {property.title}
+            <Link to={detailUrl}>
+              {property.title}
+            </Link>
           </h3>
 
           {/* Location */}
@@ -99,12 +106,12 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewClic
           <Button
             variant="outline"
             size="md"
-            href="/properties"
+            href={detailUrl}
             className="w-full justify-center font-semibold border-slate-300 text-slate-800 bg-white hover:!bg-slate-900 hover:!text-white hover:!border-slate-900 group-hover:bg-slate-900 group-hover:text-white group-hover:border-slate-900 transition-all duration-200 shadow-xs"
             icon={<ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />}
             onClick={() => onViewClick?.(property)}
           >
-            View Details
+            View Property
           </Button>
         </div>
       </div>

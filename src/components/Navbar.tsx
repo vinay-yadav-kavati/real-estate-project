@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { Button } from './Button';
+import { COMPANY_INFO } from '../data/company';
 
 export const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -10,7 +11,6 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { label: 'Home', href: '/' },
     { label: 'Properties', href: '/properties' },
-    { label: 'Projects', href: '/projects' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
   ];
@@ -28,13 +28,13 @@ export const Navbar: React.FC = () => {
           <Link
             to="/"
             className="flex items-center gap-2 group text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 rounded"
-            aria-label="HomeNest Home"
+            aria-label={`${COMPANY_INFO.name} Home`}
           >
             <div className="w-9 h-9 rounded-md bg-slate-900 text-white flex items-center justify-center font-bold text-sm tracking-wider shadow-xs">
               HN
             </div>
             <span className="text-xl font-bold tracking-tight text-slate-900">
-              HomeNest
+              {COMPANY_INFO.name}
             </span>
           </Link>
 
@@ -66,7 +66,7 @@ export const Navbar: React.FC = () => {
             <Button
               variant="gold"
               size="md"
-              href="/contact"
+              href="/enquire"
               className="font-semibold shadow-xs"
               icon={<ArrowRight className="w-4 h-4" />}
             >
@@ -113,17 +113,25 @@ export const Navbar: React.FC = () => {
             ))}
           </nav>
 
-          <div className="pt-3 border-t border-slate-100">
+          <div className="pt-3 border-t border-slate-100 space-y-2">
             <Button
               variant="gold"
               size="lg"
-              href="/contact"
+              href="/enquire"
               onClick={() => setIsMobileMenuOpen(false)}
               className="w-full justify-center font-semibold"
               icon={<ArrowRight className="w-4 h-4" />}
             >
               Enquire Now
             </Button>
+            <Link
+              to="/admin"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center justify-center gap-1.5 py-2 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#B48C58]" />
+              <span>Admin Portal</span>
+            </Link>
           </div>
         </div>
       )}

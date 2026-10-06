@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Instagram, Facebook, Linkedin, Youtube } from 'lucide-react';
+import { COMPANY_INFO } from '../data/company';
 
 export const Footer: React.FC = () => {
   return (
@@ -14,37 +15,37 @@ export const Footer: React.FC = () => {
                 HN
               </div>
               <span className="text-xl font-bold tracking-tight text-white">
-                HomeNest
+                {COMPANY_INFO.name}
               </span>
             </Link>
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
-              Helping individuals, families, and investors discover verified residential and commercial properties with transparent guidance and end-to-end advisory.
+              {COMPANY_INFO.description}
             </p>
             {/* Social Media Links */}
             <div className="pt-2 flex items-center gap-3">
               <a
-                href="#instagram"
+                href={COMPANY_INFO.socials.instagram}
                 aria-label="Instagram"
                 className="w-9 h-9 rounded-lg bg-slate-900 hover:bg-[#B48C58] text-slate-300 hover:text-white flex items-center justify-center transition-colors"
               >
                 <Instagram className="w-4 h-4" />
               </a>
               <a
-                href="#facebook"
+                href={COMPANY_INFO.socials.facebook}
                 aria-label="Facebook"
                 className="w-9 h-9 rounded-lg bg-slate-900 hover:bg-[#B48C58] text-slate-300 hover:text-white flex items-center justify-center transition-colors"
               >
                 <Facebook className="w-4 h-4" />
               </a>
               <a
-                href="#linkedin"
+                href={COMPANY_INFO.socials.linkedin}
                 aria-label="LinkedIn"
                 className="w-9 h-9 rounded-lg bg-slate-900 hover:bg-[#B48C58] text-slate-300 hover:text-white flex items-center justify-center transition-colors"
               >
                 <Linkedin className="w-4 h-4" />
               </a>
               <a
-                href="#youtube"
+                href={COMPANY_INFO.socials.youtube}
                 aria-label="YouTube"
                 className="w-9 h-9 rounded-lg bg-slate-900 hover:bg-[#B48C58] text-slate-300 hover:text-white flex items-center justify-center transition-colors"
               >
@@ -70,18 +71,18 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/projects" className="text-slate-400 hover:text-white transition-colors">
-                  Projects
-                </Link>
-              </li>
-              <li>
                 <Link to="/about" className="text-slate-400 hover:text-white transition-colors">
-                  About
+                  About Us
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="text-slate-400 hover:text-white transition-colors">
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/enquire" className="text-slate-400 hover:text-white transition-colors">
+                  General Enquiry
                 </Link>
               </li>
             </ul>
@@ -95,15 +96,25 @@ export const Footer: React.FC = () => {
             <ul className="space-y-3 text-sm text-slate-400">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#B48C58] shrink-0 mt-0.5" />
-                <span>Hyderabad, Telangana</span>
+                <span>{COMPANY_INFO.location.city}, {COMPANY_INFO.location.state}</span>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#B48C58] shrink-0" />
-                <span>+91 XXXXX XXXXX</span>
+              <li>
+                <a
+                  href={COMPANY_INFO.phoneHref}
+                  className="flex items-center gap-2.5 hover:text-white transition-colors"
+                >
+                  <Phone className="w-4 h-4 text-[#B48C58] shrink-0" />
+                  <span>{COMPANY_INFO.phone}</span>
+                </a>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#B48C58] shrink-0" />
-                <span>info@example.com</span>
+              <li>
+                <a
+                  href={COMPANY_INFO.emailHref}
+                  className="flex items-center gap-2.5 hover:text-white transition-colors"
+                >
+                  <Mail className="w-4 h-4 text-[#B48C58] shrink-0" />
+                  <span>{COMPANY_INFO.email}</span>
+                </a>
               </li>
             </ul>
           </div>
@@ -117,14 +128,14 @@ export const Footer: React.FC = () => {
               Every listing is physically verified, RERA-cleared, and vetted by legal advisors to safeguard your investment.
             </p>
             <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 text-xs text-slate-300">
-              Consulting hours: Mon – Sat, 9:30 AM – 6:30 PM IST
+              {COMPANY_INFO.hours.weekdays}
             </div>
           </div>
         </div>
 
         {/* Legal & Bottom bar */}
         <div className="mt-12 pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© 2026 HomeNest. All rights reserved.</p>
+          <p>© 2026 {COMPANY_INFO.name}. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <a href="#privacy" className="hover:text-slate-400 transition-colors">
               Privacy Policy
@@ -132,6 +143,13 @@ export const Footer: React.FC = () => {
             <a href="#terms" className="hover:text-slate-400 transition-colors">
               Terms & Conditions
             </a>
+            <Link
+              to="/admin"
+              className="text-slate-400 hover:text-[#E4C59E] transition-colors font-medium flex items-center gap-1"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#B48C58]" />
+              <span>Admin Portal</span>
+            </Link>
           </div>
         </div>
       </div>

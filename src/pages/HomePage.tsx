@@ -6,10 +6,13 @@ import { SearchPanel } from '../components/SearchPanel';
 import { PropertyCard } from '../components/PropertyCard';
 import { FeatureCard } from '../components/FeatureCard';
 import { TestimonialCard } from '../components/TestimonialCard';
-import { FEATURED_PROPERTIES } from '../data/properties';
+import { useProperties } from '../context/PropertyContext';
 import { TESTIMONIALS } from '../data/testimonials';
 
 export const HomePage: React.FC = () => {
+  const { properties } = useProperties();
+  const featuredProperties = properties.filter((p) => p.featured).slice(0, 3);
+  const displayedProperties = featuredProperties.length ? featuredProperties : properties.slice(0, 3);
   const features = [
     {
       icon: ShieldCheck,
@@ -164,9 +167,9 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
 
-        {/* 3 Static Property Cards Grid */}
+        {/* Featured Property Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {FEATURED_PROPERTIES.filter((p) => p.featured).map((property) => (
+          {displayedProperties.map((property) => (
             <PropertyCard key={property.id} property={property} />
           ))}
         </div>

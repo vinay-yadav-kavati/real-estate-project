@@ -5,16 +5,18 @@ import { Button } from './Button';
 interface EmptyStateProps {
   title?: string;
   description?: string;
+  buttonLabel?: string;
   onReset?: () => void;
 }
 
 export const EmptyState: React.FC<EmptyStateProps> = ({
   title = 'No Properties Found',
-  description = "We couldn't find any properties to display.",
-  onReset
+  description = "We couldn't find any properties matching your search criteria.",
+  buttonLabel = 'Clear Filters',
+  onReset,
 }) => {
   return (
-    <div className="w-full py-16 px-4 text-center bg-white rounded-xl border border-slate-200/90 p-8 my-8 shadow-xs">
+    <div className="w-full py-16 px-4 text-center bg-white rounded-xl border border-slate-200/90 p-8 my-4 shadow-xs">
       <div className="w-16 h-16 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center mx-auto mb-4">
         <Building className="w-8 h-8 text-[#B48C58]" />
       </div>
@@ -29,11 +31,10 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
           variant="primary"
           size="md"
           onClick={onReset}
-          href="/properties"
           icon={<RotateCcw className="w-4 h-4" />}
           iconPosition="left"
         >
-          View All Properties
+          {buttonLabel}
         </Button>
       </div>
     </div>

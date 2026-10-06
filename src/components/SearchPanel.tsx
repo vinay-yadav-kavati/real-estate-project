@@ -1,21 +1,50 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MapPin, Building2, IndianRupee, Search } from 'lucide-react';
 import { Button } from './Button';
 
 export const SearchPanel: React.FC = () => {
+  const navigate = useNavigate();
   const [purpose, setPurpose] = useState<'Buy' | 'Rent'>('Buy');
   const [location, setLocation] = useState('');
   const [propertyType, setPropertyType] = useState('');
   const [budget, setBudget] = useState('');
-  const [searchNotice, setSearchNotice] = useState<string | null>(null);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Non-functional mock search interaction for Step 1
-    setSearchNotice('Search filtering will be connected in Step 2. You can explore featured properties below.');
-    setTimeout(() => {
-      setSearchNotice(null);
-    }, 4500);
+
+    const params = new URLSearchParams();
+
+    // 1. Purpose (Buy / Rent)
+    if (purpose) {
+      params.set('purpose', purpose);
+    }
+
+    // 2. Location
+    if (location.trim()) {
+      params.set('location', location.trim());
+    }
+
+    // 3. Property Type
+    if (propertyType.trim()) {
+      params.set('type', propertyType.trim());
+    }
+
+    // 4. Budget Mapping
+    if (budget === 'under-75l') {
+      params.set('maxPrice', '7500000');
+    } else if (budget === '75l-1.5cr') {
+      params.set('minPrice', '7500000');
+      params.set('maxPrice', '15000000');
+    } else if (budget === '1.5cr-3cr') {
+      params.set('minPrice', '15000000');
+      params.set('maxPrice', '30000000');
+    } else if (budget === '3cr-plus') {
+      params.set('minPrice', '30000000');
+    }
+
+    const queryString = params.toString();
+    navigate(queryString ? `/properties?${queryString}` : '/properties');
   };
 
   return (
@@ -63,11 +92,15 @@ export const SearchPanel: React.FC = () => {
               className="w-full pl-9 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:bg-white appearance-none cursor-pointer"
             >
               <option value="">Select Location</option>
-              <option value="jubilee-hills">Jubilee Hills, Hyderabad</option>
-              <option value="banjara-hills">Banjara Hills, Hyderabad</option>
-              <option value="gachibowli">Gachibowli, Hyderabad</option>
-              <option value="financial-district">Financial District, Hyderabad</option>
-              <option value="madhapur">Madhapur, Hyderabad</option>
+              <option value="Jubilee Hills">Jubilee Hills, Hyderabad</option>
+              <option value="Banjara Hills">Banjara Hills, Hyderabad</option>
+              <option value="Gachibowli">Gachibowli, Hyderabad</option>
+              <option value="Financial District">Financial District, Hyderabad</option>
+              <option value="Madhapur">Madhapur, Hyderabad</option>
+              <option value="Hitec City">Hitec City, Hyderabad</option>
+              <option value="Gandipet">Gandipet, Hyderabad</option>
+              <option value="Kokapet">Kokapet, Hyderabad</option>
+              <option value="Kondapur">Kondapur, Hyderabad</option>
             </select>
           </div>
         </div>
@@ -87,10 +120,12 @@ export const SearchPanel: React.FC = () => {
               className="w-full pl-9 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:bg-white appearance-none cursor-pointer"
             >
               <option value="">Apartment / Villa / Plot / Commercial</option>
-              <option value="apartment">Apartment</option>
-              <option value="villa">Luxury Villa</option>
-              <option value="plot">Residential Plot</option>
-              <option value="commercial">Commercial Space</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Villa">Luxury Villa</option>
+              <option value="Plot">Residential Plot</option>
+              <option value="Commercial">Commercial Space</option>
+              <option value="Duplex">Contemporary Duplex</option>
+              <option value="House">Independent House</option>
             </select>
           </div>
         </div>
@@ -132,20 +167,6 @@ export const SearchPanel: React.FC = () => {
           </Button>
         </div>
       </form>
-
-      {/* Non-functional notification feedback for Step 1 */}
-      {searchNotice && (
-        <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-800 flex items-center justify-between">
-          <span>{searchNotice}</span>
-          <button
-            type="button"
-            onClick={() => setSearchNotice(null)}
-            className="text-amber-900 font-bold ml-2 hover:underline cursor-pointer"
-          >
-            Dismiss
-          </button>
-        </div>
-      )}
     </div>
   );
 };
